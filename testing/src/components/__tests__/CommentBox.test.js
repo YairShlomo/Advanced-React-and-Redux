@@ -1,10 +1,15 @@
 import React from "react";
 import { mount } from "enzyme";
 import CommentBox from "../CommentBox";
+import Root from "../../Root";
 let wrapped;
 
 beforeEach(() => {
-  wrapped = mount(<CommentBox />);
+  wrapped = mount(
+    <Root>
+      <CommentBox />
+    </Root>
+  );
 });
 
 it("has a text area and a button", () => {
@@ -13,12 +18,12 @@ it("has a text area and a button", () => {
 });
 
 describe("the text area", () => {
-   beforeEach(() => {
+  beforeEach(() => {
     wrapped.find("textarea").simulate("change", {
-        target: { value: "new comment" },
-      });
-      wrapped.update();
-   });
+      target: { value: "new comment" },
+    });
+    wrapped.update();
+  });
   it("has a text area that users can type in", () => {
     expect(wrapped.find("textarea").prop("value")).toEqual("new comment");
   });
