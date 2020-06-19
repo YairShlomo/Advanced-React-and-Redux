@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 
 class Signup extends Component {
-  onSubmit = formProps => {
+  onSubmit = (formProps) => {
     this.props.signup(formProps);
   };
 
@@ -31,13 +31,18 @@ class Signup extends Component {
             autoComplete="none"
           />
         </fieldset>
+        <div>{this.props.errorMessage}</div>
         <button>Sign up!</button>
       </form>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.errorMessage };
+}
+
 export default compose(
-  connect(null, actions),
+  connect(mapStateToProps, actions),
   reduxForm({ form: "signup" })
 )(Signup);
