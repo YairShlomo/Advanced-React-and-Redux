@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
-//const assert = require('assert');
+const cors = require('cors');
 
 // DB Setup
 
@@ -32,23 +32,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 mongoose.connection.on('connected', ()=>{
   console.log('MongoDB connected at port 27017'+db.dbName);
 });
-/*
-// Use connect method to connect to the server
-mongoose.connect(url, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-    //console.log(client);
-    console.log("err: "+err);
-    client.dbName = 'auth';
-   // const db = client.db(dbName);
-  
-    client.close();
-  });
-  */
-
 
 // App Setup
 app.use(morgan('combined'));
+app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
 
